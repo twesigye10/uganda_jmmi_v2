@@ -81,6 +81,22 @@ meb_items_this_round <- meb_items_for_this_month_imputation %>%
 
 # just for this round i will keep this the same so that the values match... next round, we must change to the same 
 # aggregation scheme as above
+
+# To be used from March dataset -------------------------------------------
+
+# meb_items_last_round <- meb_items_for_prev_month_imputation %>%
+#   group_by(settlement) %>% 
+#   mutate(across(where(is.numeric),~ifelse(is.na(.),mean(.,na.rm=T),.))) %>% 
+#   ungroup() %>% 
+#   group_by(district) %>% 
+#   mutate(across(where(is.numeric),~ifelse(is.na(.),mean(.,na.rm=T),.))) %>% 
+#   ungroup() %>% 
+#   group_by(regions) %>% 
+#   mutate(across(where(is.numeric),~ifelse(is.na(.),mean(.,na.rm=T),.))) %>% 
+#   filter(yrmo %in% yrmo_constructed)
+
+
+
 meb_items_last_round <- meb_items_for_prev_month_imputation %>%
   group_by(regions) %>% 
   mutate(across(where(is.numeric),~ifelse(is.na(.),mean(.,na.rm=T),.))) %>% 
