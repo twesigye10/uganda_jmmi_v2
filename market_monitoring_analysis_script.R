@@ -182,59 +182,59 @@ nan_inf_to_na <- function(x) {
 
 national_items <- item_prices_for_pct_change %>%  
   select(-uuid, -regions, -district, -settlement, -market_final) %>% 
-  group_by(month, collection_order) %>% 
+  group_by(yrmo, collection_order) %>% 
   summarise_all(funs(mean(., na.rm = TRUE))) %>%
   mutate_at(vars(-group_cols()), nan_inf_to_na)
 
 
 markets_items <- item_prices_for_pct_change %>%  select(-uuid,-regions,-district) %>% 
-  group_by(settlement,market_final,month) %>% 
+  group_by(settlement,market_final,yrmo) %>% 
   summarise_all(funs(mean(., na.rm = TRUE))) %>% 
   mutate_at(vars(-group_cols()), nan_inf_to_na)
 
 
 settlement_items <- item_prices_for_pct_change %>%  select(-uuid,-market_final) %>% 
-  group_by(regions,district,settlement,month) %>% 
+  group_by(regions,district,settlement,yrmo) %>% 
   summarise_all(funs(mean(., na.rm = TRUE))) %>%
   mutate_at(vars(-group_cols()), nan_inf_to_na)
 
 
 district_items <- item_prices_for_pct_change %>%  select(-uuid,-settlement,-market_final) %>% 
-  group_by(regions,district,month) %>% 
+  group_by(regions,district,yrmo) %>% 
   summarise_all(funs(mean(., na.rm = TRUE))) %>%
   mutate_at(vars(-group_cols()), nan_inf_to_na)  
 
 
 region_items <- item_prices_for_pct_change %>%  select(-uuid,-market_final,-district,-settlement) %>% 
-  group_by(regions,month) %>% 
+  group_by(regions,yrmo) %>% 
   summarise_all(funs(mean(., na.rm = TRUE))) %>%
   mutate_at(vars(-group_cols()), nan_inf_to_na)
 
 
 # Counts per area: region and settlements
 markets_per_region <- item_prices_for_pct_change %>% 
-  select(regions, month, market_final) %>% 
-  group_by(regions,month) %>% 
+  select(regions, yrmo, market_final) %>% 
+  group_by(regions,yrmo) %>% 
   summarise(num_market_assessed = n_distinct(market_final),
-            num_assessed = length(month)) %>% 
-  rename("level"= regions) %>% filter(month == this_round_vec) %>% 
+            num_assessed = length(yrmo)) %>% 
+  rename("level"= regions) %>% filter(yrmo == yrmo_constructed) %>% 
   select(level,num_market_assessed,num_assessed)
 
 
 settlements_per_region <- item_prices_for_pct_change %>% 
-  select(regions,settlement,month) %>% 
-  group_by(regions,month) %>% 
+  select(regions,settlement,yrmo) %>% 
+  group_by(regions,yrmo) %>% 
   summarise(markets_numer = n_distinct(settlement))
 
 
 # Counts per area: nation wide
 markets_nationwide <- item_prices_for_pct_change %>%
-  select(regions, month, market_final) %>% 
-  group_by(month) %>% 
+  select(regions, yrmo, market_final) %>% 
+  group_by(yrmo) %>% 
   summarise(num_market_assessed = n_distinct(market_final),
-            num_assessed = length(month),
+            num_assessed = length(yrmo),
             level = "national") %>% 
-  filter(month == this_round_vec) %>% 
+  filter(yrmo == yrmo_constructed) %>% 
   select(level,num_market_assessed,num_assessed)
 
 
@@ -274,7 +274,7 @@ write.xlsx(list_of_datasets_med,
            paste0("./outputs/",
                   output_folder,"/",
                   butteR::date_file_prefix(),"_",
-                  this_round_vec,
+                  yrmo_constructed,
                   "_UGA_JMMI_Means and percentage change.xlsx")
            )
 
@@ -282,7 +282,7 @@ write.xlsx(list_of_datasets_meb,
            paste0("./outputs/",
                   output_folder,"/",
                   butteR::date_file_prefix(),"_",
-                  this_round_vec,
+                  yrmo_constructed,
                   "_UGA_JMMI_MEB and percentage change.xlsx")
            )
 
@@ -327,7 +327,7 @@ summary.stats.list %>%
   map_to_file(paste0("./outputs/",
                      output_folder,"/",
                      butteR::date_file_prefix(),"_",
-                     this_round_vec, "_jmmi_analysis.csv"))
+                     yrmo_constructed, "_jmmi_analysis.csv"))
 # resultlist_summary_statistics_as_one_table()
 
 ## Save html analysis file
@@ -732,7 +732,7 @@ write_csv(
          output_folder,
          "/",
          butteR::date_file_prefix(),"_",
-         this_round_vec,
+         yrmo_constructed,
          "_jmmi_data merge.csv"), na= "n/a"
   
   
