@@ -93,8 +93,7 @@ meb_items_last_round <- meb_items_for_prev_month_imputation %>%
   ungroup() %>%
   group_by(regions) %>%
   mutate(across(where(is.numeric),~ifelse(is.na(.),mean(.,na.rm=T),.))) %>%
-  filter(yrmo %in% yrmo_constructed)
-
+  filter(yrmo %in% prior_2_rounds[1])
 
 
 # meb_items_last_round <- meb_items_for_prev_month_imputation %>%
