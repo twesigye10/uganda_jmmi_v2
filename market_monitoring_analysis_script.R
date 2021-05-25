@@ -168,8 +168,8 @@ item_prices <- item_prices %>% select(-contains("weight"), -contains("Observed")
 # for pct change we only want this month, last month, and march
 item_prices_for_pct_change<- item_prices %>% 
   filter(yrmo %in% c(yrmo_to_include[1],yrmo_to_include[length(yrmo_to_include)],yrmo_to_include[length(yrmo_to_include)-1])) %>% 
-  mutate(collection_order = ifelse(month == month_number, 4,
-                                   ifelse(month == prev1_month_number,3, 1)),
+  mutate(collection_order = ifelse(yrmo == yrmo_to_include[length(yrmo_to_include)], 4,
+                                   ifelse(yrmo == yrmo_to_include[length(yrmo_to_include)-1],3, 1)),
          month=month(month, label = T, abbr=F))
 
 # Mean prices
