@@ -8,9 +8,7 @@ district_data <- read.csv("inputs/Districts_list.csv",stringsAsFactors=FALSE, na
 
 
 # Create new variable with district name in lower case
-district_data <- district_data %>%  mutate(district = str_to_sentence(DName2019) )
-district_data$district <- tolower(district_data$district)
-
+district_data <- district_data %>%  mutate(district = str_to_lower(DName2019) )
 
 # Aggregate coordinates for Adjumani and add the aggregated value to the settlements coordinates list
 Adjumani_coordinates <- settlement_data %>% filter(DISTRICT == "adjumani") %>% 
