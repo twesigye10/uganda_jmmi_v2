@@ -121,7 +121,7 @@ meb_items$meb_maize_f <- meb_items$price_maize_f * 8.7 * 5
 meb_items$meb_beans <- meb_items$price_beans * 5.4 * 5
 meb_items$meb_sorghum <- meb_items$price_sorghum * 1.5 * 5
 meb_items$meb_oil <- meb_items$price_oil * 0.75 * 5
-meb_items$meb_salt <- meb_items$price_salt * 0.15 * 5
+meb_items$meb_salt <- meb_items$price_salt *2* 0.15 * 5 # price of salt is per 500g, meaning(price_salt * 2 )
 meb_items$meb_milk <- meb_items$price_milk * 0.3 * 5
 meb_items$meb_dodo <- meb_items$price_dodo * 3 * 5
 meb_items$meb_fish <- meb_items$price_fish * 0.6 * 5
