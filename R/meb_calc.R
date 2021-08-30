@@ -2,8 +2,8 @@
 ## Last modified 16/06/2020
 
 ## Load March price
-march_mebs <- read.xlsx("./inputs/wfp_march_mebs.xlsx") %>% 
-  mutate(yrmo="202003")
+march_mebs <- read.xlsx("./inputs/wfp_march_mebs_2021.xlsx") %>% 
+  mutate(yrmo="202103")
 
 
 ## Medians Calculation
